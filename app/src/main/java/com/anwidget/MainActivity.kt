@@ -1,53 +1,50 @@
 package com.anwidget
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.LifecycleOwner
+import android.widget.Button
+import android.widget.TextView
+import androidx.activity.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.anwidget.video.VideoAdapter
-import com.anwidget.video.VideoModel
-import com.google.android.exoplayer2.MediaItem
-import com.google.android.exoplayer2.source.MediaSource
-import com.google.android.exoplayer2.source.ProgressiveMediaSource
-import com.google.android.exoplayer2.ui.PlayerView
-import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
+import com.anwidget.video.VideoManager
+import com.anwidget.video.VideoView
+import com.bumptech.glide.Glide
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
-    val videoList = listOf(
-        TestModel("1", createMediaSource("")),
-        TestModel("2", createMediaSource("")),
-        TestModel("3", createMediaSource("")),
-        TestModel("4", createMediaSource("")),
-        TestModel("5", createMediaSource("")),
-        TestModel("6", createMediaSource("")),
-        TestModel("7", createMediaSource("")),
-        TestModel("8", createMediaSource("")),
-        TestModel("9", createMediaSource("")),
-        TestModel("10", createMediaSource(""))
-    )
-
-    private fun createMediaSource(path: String): MediaSource {
-        return ProgressiveMediaSource
-            .Factory(DefaultDataSourceFactory(this, this.packageName))
-            .createMediaSource(MediaItem.fromUri(path))
-    }
+    private val viewModel by viewModels<MainViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        val recyclerview = findViewById<RecyclerView>(R.id.recyclerview)
+        recyclerview.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
+        val adapter = TestAdapter(VideoManager(MyApp.application, this))
+        recyclerview.adapter = adapter
 
+        viewModel.getTestData().observe(this) {
+            lifecycleScope.launch {
+                adapter.submitData(it)
+            }
+        }
+        findViewById<Button>(R.id.nextView).setOnClickListener {
+            startActivity(Intent(this, SinglePlayActivity::class.java))
+        }
     }
 }
 
-data class TestModel(val title: String, override val mediaSource: MediaSource) :
-    VideoModel(mediaSource)
 
-class TestAdapter(lifecycleOwner: LifecycleOwner) :
-    VideoAdapter<TestModel, TestAdapter.Companion.TestVH>(lifecycleOwner, COMPARATOR) {
+class TestAdapter(videoManager: VideoManager) :
+    VideoAdapter<TestModel, TestAdapter.Companion.TestVH>(videoManager, COMPARATOR) {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TestVH {
@@ -74,17 +71,16 @@ class TestAdapter(lifecycleOwner: LifecycleOwner) :
         }
 
         class TestVH(itemView: View) : VideoViewHolder<TestModel>(itemView) {
-
-
             override fun bind(data: TestModel) {
+                itemView.findViewById<TextView>(R.id.titleView).text = data.title
+                val coverView = getPlayerView().coverView
+                Glide.with(coverView)
+                    .load(data.cover)
+                    .into(coverView)
             }
 
-            override fun getPlayerView(): PlayerView {
-                TODO("Not yet implemented")
-            }
-
-            override fun setCoverVisibility(visibility: Boolean) {
-
+            override fun getPlayerView(): VideoView {
+                return itemView.findViewById(R.id.videoView)
             }
         }
     }
