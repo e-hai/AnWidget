@@ -2,27 +2,24 @@ package com.anwidget
 
 import android.app.Application
 import android.util.Log
+import androidx.core.net.toUri
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.paging.PagingData
 import androidx.paging.map
+import com.anwidget.video.VideoHelper.createMediaSource
 import com.anwidget.video.VideoModel
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.source.MediaSource
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
+import com.google.android.exoplayer2.upstream.DefaultDataSource
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import kotlinx.coroutines.flow.map
 
 class MainViewModel(private val context: Application) : AndroidViewModel(context) {
 
-
-    private fun createMediaSource(path: String): MediaSource {
-        return ProgressiveMediaSource
-            .Factory(DefaultDataSourceFactory(context, context.packageName))
-            .createMediaSource(MediaItem.fromUri(path))
-    }
 
     fun getTestData(): LiveData<PagingData<TestModel>> {
         return MainRepository.getTestPaging()
@@ -31,7 +28,7 @@ class MainViewModel(private val context: Application) : AndroidViewModel(context
                     TestModel(
                         it,
                         "https://pic3.pocoimg.cn/image/poco/works/61/2021/0901/08/16304575486922620_179094558.jpg?imageMogr2/auto-orient/thumbnail/120x/blur/1x0/quality/100&",
-                        createMediaSource(responseData[it] ?: "")
+                        createMediaSource(context, responseData[it]?.toUri() ?: "".toUri())
                     )
                 }
             }.asLiveData()

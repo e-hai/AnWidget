@@ -1,6 +1,5 @@
 package com.anwidget.video
 
-import android.app.Application
 import android.content.Context
 import android.graphics.Color
 import android.net.Uri
@@ -10,15 +9,9 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
 import com.google.android.exoplayer2.ExoPlayer
-import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.Player
-import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.source.MediaSource
-import com.google.android.exoplayer2.source.ProgressiveMediaSource
-import com.google.android.exoplayer2.ui.PlayerView
 import com.google.android.exoplayer2.upstream.DataSpec
-import com.google.android.exoplayer2.upstream.DefaultDataSource
-import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.upstream.RawResourceDataSource
 
 class VideoManager(
@@ -29,10 +22,10 @@ class VideoManager(
 
     private var playerView: VideoView? = null
     private var mediaSource: MediaSource? = null
-    private var player: SimpleExoPlayer? = null
+    private var player: ExoPlayer? = null
 
 
-    private fun createPlayer(context: Context) = SimpleExoPlayer
+    private fun createPlayer(context: Context) = ExoPlayer
         .Builder(context)
         .build()
         .apply {
@@ -113,11 +106,7 @@ class VideoManager(
     ) {
         playerView.useController = false
         playerView.setShutterBackgroundColor(Color.TRANSPARENT)
-        val dataSourceFactory = DefaultDataSourceFactory(context, context.packageName)
-        val mediaItem = MediaItem.fromUri(videoUri)
-        val mediaSource = ProgressiveMediaSource
-            .Factory(dataSourceFactory)
-            .createMediaSource(mediaItem)
+        val mediaSource = VideoHelper.createMediaSource(context,videoUri)
         playVideoFromMediaSource(playerView, mediaSource)
     }
 
