@@ -1,22 +1,25 @@
 package com.anwidget
 
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.TextView
+import android.widget.VideoView
 import androidx.activity.viewModels
+import androidx.core.net.toUri
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.anwidget.video.VideoAdapter
-import com.anwidget.video.VideoManager
-import com.anwidget.video.VideoView
-import com.bumptech.glide.Glide
+import androidx.viewpager2.widget.ViewPager2
+import com.anwidget.video.exoplayer.ExoManager
+import com.anwidget.video.exoplayer.ExoPagingDataAdapter
+import com.anwidget.video.original.VideoViewAdapter
+import com.anwidget.video.original.VideoViewManager
+import com.google.android.exoplayer2.source.MediaSource
+import com.google.android.exoplayer2.ui.StyledPlayerView
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
@@ -26,12 +29,17 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val recyclerview = findViewById<RecyclerView>(R.id.recyclerview)
-        recyclerview.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
-        val adapter = TestAdapter(VideoManager(MyApp.application, this))
-        recyclerview.adapter = adapter
+        val adapter = OriginalDemoAdapter(VideoViewManager(this))
+        findViewById<ViewPager2>(R.id.recyclerview).apply {
+            this.adapter = adapter
+            registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    adapter.switchPager(position)
+                }
+            })
+        }
 
-        viewModel.getTestData().observe(this) {
+        viewModel.getPagingDataFromString().observe(this) {
             lifecycleScope.launch {
                 adapter.submitData(it)
             }
@@ -43,45 +51,86 @@ class MainActivity : AppCompatActivity() {
 }
 
 
-class TestAdapter(videoManager: VideoManager) :
-    VideoAdapter<TestModel, TestAdapter.Companion.TestVH>(videoManager, COMPARATOR) {
-
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TestVH {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.adapter_test, parent, false)
-        return TestVH(view)
-    }
-
-
+class ExoDemoAdapter(videoManager: ExoManager) : ExoPagingDataAdapter<TestModelExo,
+        ExoDemoAdapter.ExoVH>(videoManager, COMPARATOR) {
     companion object {
-        val COMPARATOR = object : DiffUtil.ItemCallback<TestModel>() {
+        val COMPARATOR = object : DiffUtil.ItemCallback<TestModelExo>() {
             override fun areItemsTheSame(
-                oldItem: TestModel,
-                newItem: TestModel
+                oldItem: TestModelExo,
+                newItem: TestModelExo
             ): Boolean {
-                return oldItem.title == newItem.title
+                return oldItem == newItem
             }
 
             override fun areContentsTheSame(
-                oldItem: TestModel,
-                newItem: TestModel
+                oldItem: TestModelExo,
+                newItem: TestModelExo
             ): Boolean {
                 return oldItem == newItem
             }
         }
+    }
 
-        class TestVH(itemView: View) : VideoViewHolder<TestModel>(itemView) {
-            override fun bind(data: TestModel) {
-                itemView.findViewById<TextView>(R.id.titleView).text = data.title
-                val coverView = getPlayerView().coverView
-                Glide.with(coverView)
-                    .load(data.cover)
-                    .into(coverView)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExoVH {
+        val view =
+            LayoutInflater.from(parent.context).inflate(R.layout.adapter_exo_demo, parent, false)
+        return ExoVH(view)
+    }
+
+    override fun onBindViewHolder(holder: ExoVH, position: Int) {
+    }
+
+    class ExoVH(itemView: View) : ExoPagingDataAdapter.VideoViewHolder(itemView) {
+
+        override fun getPlayerView(): StyledPlayerView {
+            return itemView.findViewById(R.id.videoView)
+        }
+    }
+
+
+    override fun getVideoMediaSource(position: Int): MediaSource? {
+        return getItem(position)?.source
+    }
+}
+
+class OriginalDemoAdapter(videoManager: VideoViewManager) :
+    VideoViewAdapter<String, OriginalDemoAdapter.OriginalVH>(videoManager, ORIGINAL_COMPARATOR) {
+
+    companion object {
+        val ORIGINAL_COMPARATOR = object : DiffUtil.ItemCallback<String>() {
+            override fun areItemsTheSame(
+                oldItem: String,
+                newItem: String
+            ): Boolean {
+                return oldItem == newItem
             }
 
-            override fun getPlayerView(): VideoView {
-                return itemView.findViewById(R.id.videoView)
+            override fun areContentsTheSame(
+                oldItem: String,
+                newItem: String
+            ): Boolean {
+                return oldItem == newItem
             }
         }
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OriginalVH {
+        val view =
+            LayoutInflater.from(parent.context)
+                .inflate(R.layout.adapter_videoview_demo, parent, false)
+        return OriginalVH(view)
+    }
+
+    override fun onBindViewHolder(holder: OriginalVH, position: Int) {
+    }
+
+    class OriginalVH(itemView: View) : VideoViewHolder(itemView) {
+        override fun getPlayerView(): VideoView {
+            return itemView.findViewById(R.id.videoView)
+        }
+    }
+
+    override fun getVideoUri(position: Int): Uri? {
+        return getItem(position)?.toUri()
     }
 }
