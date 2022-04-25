@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 
-abstract class VideoViewAdapter<T : Any, VH : VideoViewAdapter.VideoViewHolder>(
+abstract class VideoViewPagingAdapter<T : Any, VH : VideoViewPagingAdapter.VideoViewPagingHolder>(
     private val videoManager: VideoViewManager,
     diffCallback: DiffUtil.ItemCallback<T>,
     mainDispatcher: CoroutineDispatcher = Dispatchers.Main,
@@ -37,7 +37,7 @@ abstract class VideoViewAdapter<T : Any, VH : VideoViewAdapter.VideoViewHolder>(
 
     abstract fun getVideoUri(position: Int): Uri?
 
-    abstract class VideoViewHolder(itemView: View) :
+    abstract class VideoViewPagingHolder(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
 
         abstract fun getPlayerView(): VideoView

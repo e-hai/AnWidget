@@ -18,6 +18,7 @@ import com.anwidget.video.exoplayer.ExoManager
 import com.anwidget.video.exoplayer.ExoPagingDataAdapter
 import com.anwidget.video.original.VideoViewAdapter
 import com.anwidget.video.original.VideoViewManager
+import com.anwidget.video.original.VideoViewSimpleAdapter
 import com.google.android.exoplayer2.source.MediaSource
 import com.google.android.exoplayer2.ui.StyledPlayerView
 import kotlinx.coroutines.launch
@@ -132,5 +133,34 @@ class OriginalDemoAdapter(videoManager: VideoViewManager) :
 
     override fun getVideoUri(position: Int): Uri? {
         return getItem(position)?.toUri()
+    }
+}
+
+class OriginalSimpleAdapter(videoManager: VideoViewManager) :
+    VideoViewSimpleAdapter<OriginalSimpleAdapter.SimpleVH>(videoManager) {
+    private val dataList = emptyList<String>()
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SimpleVH {
+        val view =
+            LayoutInflater.from(parent.context)
+                .inflate(R.layout.adapter_videoview_demo, parent, false)
+        return SimpleVH(view)
+    }
+
+    override fun onBindViewHolder(holder: SimpleVH, position: Int) {
+    }
+
+    class SimpleVH(itemView: View) : VideoViewSimpleHolder(itemView) {
+        override fun getPlayerView(): VideoView {
+            return itemView.findViewById(R.id.videoView)
+        }
+    }
+
+    override fun getVideoUri(position: Int): Uri {
+        return dataList[position].toUri()
+    }
+
+    override fun getItemCount(): Int {
+        return dataList.size
     }
 }
