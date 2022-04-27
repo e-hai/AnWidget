@@ -1,4 +1,4 @@
-package com.anwidget.video.text
+package com.anwidget.text
 
 import android.graphics.Color
 import android.text.SpannableStringBuilder

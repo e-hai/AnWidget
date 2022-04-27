@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.viewpager2.widget.ViewPager2
 import com.anwidget.video.exoplayer.ExoManager
 import com.anwidget.video.exoplayer.ExoPagingDataAdapter
-import com.anwidget.video.original.VideoViewAdapter
+import com.anwidget.video.original.VideoViewPagingAdapter
 import com.anwidget.video.original.VideoViewManager
 import com.anwidget.video.original.VideoViewSimpleAdapter
 import com.google.android.exoplayer2.source.MediaSource
@@ -95,7 +95,7 @@ class ExoDemoAdapter(videoManager: ExoManager) : ExoPagingDataAdapter<TestModelE
 }
 
 class OriginalDemoAdapter(videoManager: VideoViewManager) :
-    VideoViewAdapter<String, OriginalDemoAdapter.OriginalVH>(videoManager, ORIGINAL_COMPARATOR) {
+    VideoViewPagingAdapter<String, OriginalDemoAdapter.OriginalVH>(videoManager, ORIGINAL_COMPARATOR) {
 
     companion object {
         val ORIGINAL_COMPARATOR = object : DiffUtil.ItemCallback<String>() {
@@ -125,7 +125,7 @@ class OriginalDemoAdapter(videoManager: VideoViewManager) :
     override fun onBindViewHolder(holder: OriginalVH, position: Int) {
     }
 
-    class OriginalVH(itemView: View) : VideoViewHolder(itemView) {
+    class OriginalVH(itemView: View) : VideoViewPagingHolder(itemView) {
         override fun getPlayerView(): VideoView {
             return itemView.findViewById(R.id.videoView)
         }
