@@ -12,7 +12,7 @@ import androidx.annotation.ColorInt
 import androidx.annotation.Px
 
 /**
- * TextView中经常遇到一段话中，某些文字需要不同的样式、可点击、下划线等等，因此封装成该类。
+ * TextView中经常遇到一段文案中，某些文字需要不同的样式、可点击、下划线等等，因此封装成该类。
  * **/
 class SpanStrBuilder {
 
@@ -33,7 +33,7 @@ class SpanStrBuilder {
             anSpan.click?.let {
                 val span = object : ClickableSpan() {
                     override fun onClick(widget: View) {
-                        it()
+                        it.invoke()
                     }
 
                     override fun updateDrawState(ds: TextPaint) {

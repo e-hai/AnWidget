@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.LinearLayout
+import com.sample.recycler.RecyclerActivity
 import com.sample.text.TextActivity
 
 class MainActivity : AppCompatActivity() {
@@ -15,7 +16,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val contentLayout = findViewById<LinearLayout>(R.id.ll_func)
         listOf(
-            createTextActivityBtn()
+            createTextActivityBtn(),
+            createRecyclerActivityBtn()
         ).forEach {
             contentLayout.addView(it)
         }
@@ -26,6 +28,15 @@ class MainActivity : AppCompatActivity() {
             text = "TextActivity"
             setOnClickListener {
                 startActivity(Intent(this@MainActivity, TextActivity::class.java))
+            }
+        }
+    }
+
+    private fun createRecyclerActivityBtn(): Button {
+        return Button(this).apply {
+            text = "RecyclerActivity"
+            setOnClickListener {
+                startActivity(Intent(this@MainActivity, RecyclerActivity::class.java))
             }
         }
     }
