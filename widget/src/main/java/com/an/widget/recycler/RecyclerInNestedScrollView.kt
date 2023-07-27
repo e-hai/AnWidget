@@ -1,4 +1,4 @@
-package com.widget.recycler
+package com.an.widget.recycler
 
 import android.content.Context
 import android.util.AttributeSet

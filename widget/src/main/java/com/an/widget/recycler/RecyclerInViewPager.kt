@@ -1,8 +1,9 @@
-package com.widget.recycler
+package com.an.widget.recycler
 
 import android.content.Context
 import android.util.AttributeSet
 import android.view.MotionEvent
+import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 
@@ -24,14 +25,9 @@ import androidx.viewpager2.widget.ViewPager2
  *          至于不用requestDisallowInterceptTouchEvent()，是有场景Child RecyclerView在NestScrollView中,
  *      NestScrollView在ViewPager2中，会同时禁止NestScrollView的垂直滑动拦截。
  * **/
-class RecyclerViewInViewPager2 : RecyclerView {
-    constructor(context: Context) : super(context)
-    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
-        context,
-        attrs,
-        defStyleAttr
-    )
+class RecyclerInViewPager @JvmOverloads constructor(
+    context: Context, attrs: AttributeSet? = null
+) : RecyclerView(context, attrs) {
 
     override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
         when (ev.action) {

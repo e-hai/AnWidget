@@ -13,7 +13,7 @@
             android:layout_height="200dp"
             android:background="@android:color/holo_blue_bright" />
 
-        <com.widget.recycler.RecyclerViewInViewPager2
+        <com.an.widget.recycler.RecyclerInViewPager
             android:id="@+id/recycler"
             android:layout_width="match_parent"
             android:layout_height="100dp" />

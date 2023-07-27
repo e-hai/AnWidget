@@ -1,4 +1,4 @@
-package com.widget.dialview
+package com.an.widget.dialview
 
 import android.animation.*
 import android.content.Context

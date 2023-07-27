@@ -5,8 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import com.sample.R
-import com.widget.text.AnSpan
-import com.widget.text.SpanStrBuilder
+import com.an.widget.text.AnSpan
+import com.an.widget.text.SpanStrBuilder
 
 class TextActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

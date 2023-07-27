@@ -1,4 +1,4 @@
-package com.widget.dialview
+package com.an.widget.dialview
 
 import android.animation.ObjectAnimator
 import android.content.Context
@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.widget.RelativeLayout
 import com.an.widget.R
+import com.an.widget.dialview.colorWithAlpha
 import com.robinhood.ticker.TickerUtils
 import com.robinhood.ticker.TickerView
 

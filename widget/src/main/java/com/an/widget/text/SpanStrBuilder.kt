@@ -1,4 +1,4 @@
-package com.widget.text
+package com.an.widget.text
 
 import android.graphics.Color
 import android.text.SpannableStringBuilder
@@ -9,7 +9,6 @@ import android.text.style.*
 import android.view.View
 import android.widget.TextView
 import androidx.annotation.ColorInt
-import androidx.annotation.Px
 
 /**
  * TextView中经常遇到一段文案中，某些文字需要不同的样式、可点击、下划线等等，因此封装成该类。

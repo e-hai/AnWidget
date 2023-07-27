@@ -17,8 +17,8 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.sample.R
-import com.widget.recycler.RecyclerViewInViewPager2
-import com.widget.recycler.SimpleAdapter
+import com.an.widget.recycler.RecyclerInViewPager
+import com.an.widget.recycler.SimpleAdapter
 
 /**
  * ViewPager里嵌套RecyclerView的各种场景的解决方案
@@ -78,7 +78,7 @@ class OneFragment(private val viewPager: ViewPager2) : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        view.findViewById<RecyclerViewInViewPager2>(R.id.recycler).apply {
+        view.findViewById<RecyclerInViewPager>(R.id.recycler).apply {
             layoutManager = LinearLayoutManager(context, HORIZONTAL, false)
             adapter = object : SimpleAdapter<String, OneViewHolder>() {
                 override fun onBindViewHolder(holder: OneViewHolder, model: String) {
