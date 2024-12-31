@@ -1,4 +1,4 @@
-package com.an.widget.dialview
+package com.kit.view.dialview
 
 import android.animation.*
 import android.content.Context
@@ -9,7 +9,7 @@ import android.util.Log
 import android.util.TypedValue
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
-import com.an.widget.R
+import com.kit.view.R
 import kotlin.math.cos
 import kotlin.math.max
 import kotlin.math.min
@@ -124,9 +124,9 @@ class DialView @JvmOverloads constructor(
     }
 
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        canvas?.let {
+        canvas.let {
             canvas.translate(-width / 2f, 0f)
             progressBackground.draw(canvas)
             progress.draw(canvas)

@@ -1,4 +1,4 @@
-package com.an.widget.text
+package com.kit.view.text
 
 import android.graphics.Color
 import android.text.SpannableStringBuilder

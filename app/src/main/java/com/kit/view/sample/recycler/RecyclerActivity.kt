@@ -1,8 +1,8 @@
-package com.sample.recycler
+package com.kit.view.sample.recycler
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.sample.R
+import com.kit.view.sample.R
 
 class RecyclerActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -1,12 +1,12 @@
-package com.sample
+package com.kit.view.sample
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.LinearLayout
-import com.sample.recycler.RecyclerActivity
-import com.sample.text.TextActivity
+import com.kit.view.sample.recycler.RecyclerActivity
+import com.kit.view.sample.text.TextActivity
 
 class MainActivity : AppCompatActivity() {
 

@@ -1,4 +1,4 @@
-package com.an.widget.dialview
+package com.kit.view.dialview
 
 import android.animation.ObjectAnimator
 import android.content.Context
@@ -8,8 +8,7 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.widget.RelativeLayout
-import com.an.widget.R
-import com.an.widget.dialview.colorWithAlpha
+import com.kit.view.R
 import com.robinhood.ticker.TickerUtils
 import com.robinhood.ticker.TickerView
 
@@ -66,8 +65,8 @@ class NumberTextView @JvmOverloads constructor(
         )
     }
 
-    override fun onDraw(canvas: Canvas?) {
-        canvas?.drawRect(rect, paint)
+    override fun onDraw(canvas: Canvas) {
+        canvas.drawRect(rect, paint)
         super.onDraw(canvas)
     }
 

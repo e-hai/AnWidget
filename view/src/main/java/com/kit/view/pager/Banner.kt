@@ -1,4 +1,4 @@
-package com.an.widget.pager
+package com.kit.view.pager
 
 import android.content.Context
 import android.util.AttributeSet
@@ -8,9 +8,8 @@ import android.widget.RelativeLayout
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
-import com.an.widget.R
-import com.an.widget.dip2px
-import com.an.widget.recycler.SimpleAdapter
+import com.kit.view.R
+import com.kit.view.dip2px
 
 
 /**

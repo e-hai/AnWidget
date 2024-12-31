@@ -1,12 +1,12 @@
-package com.sample.text
+package com.kit.view.sample.text
 
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import com.sample.R
-import com.an.widget.text.AnSpan
-import com.an.widget.text.SpanStrBuilder
+import com.kit.view.text.AnSpan
+import com.kit.view.text.SpanStrBuilder
+import com.kit.view.sample.R
 
 class TextActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -1,4 +1,4 @@
-package com.an.widget.recycler
+package com.kit.view.recycler
 
 import android.view.LayoutInflater
 import android.view.View

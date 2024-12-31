@@ -19,7 +19,7 @@
             android:name=".text.TextActivity"
             android:exported="false" />
         <activity
-            android:name="com.sample.MainActivity"
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

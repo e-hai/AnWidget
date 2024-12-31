@@ -1,4 +1,4 @@
-package com.sample.recycler
+package com.kit.view.sample.recycler
 
 import android.graphics.Color
 import android.os.Bundle
@@ -16,9 +16,9 @@ import androidx.recyclerview.widget.RecyclerView.HORIZONTAL
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
-import com.sample.R
-import com.an.widget.recycler.RecyclerInViewPager
-import com.an.widget.recycler.SimpleAdapter
+import com.kit.view.recycler.RecyclerInViewPager
+import com.kit.view.recycler.SimpleAdapter
+import com.kit.view.sample.R
 
 /**
  * ViewPager里嵌套RecyclerView的各种场景的解决方案
